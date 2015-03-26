@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--
+   <menuitem
+       icon="terp-project" id="account_proacc_main_menu"
+       name="account_proacc" sequence="0"
+       web_icon="images/account_proacc.png"
+       web_icon_hover="images/account_proacc-hover.png"/>
+
+    <menuitem name="Configuration" id="account_proacc_configuration_menu" parent="module_main_menu"/>
+    <menuitem name="account_proacc" id="module_menu" parent="module_main_menu"  sequence="5"/>
+
+-->
+   <!--
+       account_proacc Views 
+   -->
+<!--
+    <record model="ir.ui.view" id="view_account_proacc_tree">
+        <field name="name">view.account_proacc.tree</field>
+        <field name="model">account_proacc</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="account_proacc">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+-->
+
+        <record model="ir.ui.view" id="view_res_partner_proacc_form">
+            <field name="name">view.res.partner.proacc.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="arch" type="xml">
+                <field name="property_account_position" position="after"> 
+                    <field name="proacc_exported"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_account_invoice_proacc_form">
+            <field name="name">view.account.invoice.proacc.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form" />
+            <field name="arch" type="xml">
+                <field name="fiscal_position" position="after"> 
+                    <field name="proacc_exported"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_payment_term_proacc_form">
+            <field name="name">view.payment.term.proacc.form</field>
+            <field name="model">account.payment.term</field>
+            <field name="inherit_id" ref="account.view_payment_term_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after"> 
+                    <field name="proacc_code"/>
+                </field>
+            </field>
+        </record>
+
+       <record id="view_proacc_file_save" model="ir.ui.view">
+            <field name="name">Save ProAcc File</field>
+            <field name="model">account.proacc.api</field>
+            <field name="arch" type="xml">
+                <form string="Save ProAcc File" version="7.0">
+                    <field name="file_name" invisible="1"/>
+                    <field name="file" filename="file_name"/>
+                </form>
+            </field>
+        </record>
+
+
+   <record id="account_proacc_payment_import_wieard_view" model="ir.ui.view">
+      <field name="name">account.proacc.payment.import.wieard_view</field>
+      <field name="model">account.proacc.payment.import.wizard</field>
+      <field name="priority">1</field>
+      <field name="arch" type="xml">
+        <form string="Import ProAcc Payments File" version="7.0">
+            <group col="2">
+                <field name="proacc_file" filename="proacc_filename"/>
+            </group>
+            <footer>
+                <button name="payment_import" string="Import" type="object" class="oe_highlight"/>
+                or
+                <button string="Cancel" class="oe_link" special="cancel"/>
+            </footer>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_account_proacc_import" model="ir.actions.act_window">
+      <field name="name">Import ProAcc File</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">account.proacc.payment.import.wizard</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+      <field name="view_id" ref="account_proacc_payment_import_wieard_view"/>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_account_proacc_form">
+        <field name="name">view.account_proacc.form</field>
+        <field name="model">account.proacc.api</field>
+       <field name="priority">1</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="ProAcc Import/Export">
+                <button name="customer_export" string="Export New Customers" type="object"/>
+<!--
+                <button name="supplier_export" string="Export New Suppliers" type="object"/>
+-->
+                <button name="invoice_export" string="Export New Invoices" type="object"/>
+<!--                <button name="payment_import" string="Import Payments" type="object"/>-->
+                <button name="%(action_account_proacc_import)d" string="Import Payments" type="action"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_proacc_export">
+        <field name="name">ProAcc Import/Export</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.proacc.api</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="taget">new</field>
+    </record>
+
+    <menuitem name="ProAcc import/Export" id="menu_proacc_axport" parent="account.menu_finance_periodical_processing" action="action_proacc_export" sequence="5"/>
+
+<!--
+    <record model="ir.ui.view" id="view_campaign_proposition_segment_segmentation_form_inherit">
+        <field name="name">view.campaign.proposition.segment.segmentation.form</field>
+        <field name="model">dm.campaign.proposition</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="dm.view_campaign_proposition_form"/>        
+        <field name="arch" type="xml">
+            <xpath expr="/form/notebook/page/field[@name='segment_ids']/form/notebook" position="inside">
+                <page string="Extraction">
+                    <field name="segmentation_id" string="Segmentation"/>
+                    <field name="use_census"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+        <record id="view_product_search_nineit" model="ir.ui.view">
+            <field name="name">product.product.search.nineit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_search_form_view" />
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <xpath expr="/search/field[@name='categ_id']" position='after'>
+                        <field name="nineit_sku"/>
+                        <field name="nineit_barcode"/>
+                        <field name="nineit_import_file_id" string="Supplier"/>
+                </xpath>
+            </field>
+        </record>
+
+    <act_window name="Ship Sale Orders"
+    res_model="sale.order"
+    src_model="res.partner"
+    view_type="form"
+    view_mode="tree,form"
+    id="act_tresco_ship_sale_orders"
+    context="{'ship_id':active_id}"
+    domain="[('ship_id','=',active_id)]"
+    />
+
+
+-->
+
+    </data>
+</openerp>
