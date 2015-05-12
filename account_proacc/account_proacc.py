@@ -185,17 +185,13 @@ class account_proacc_api(osv.osv_memory):
                 your_ref = invoice.name or ""
                 currency = invoice.currency_id.name
                 currency_rate = invoice.currency_id.rate or ""
-                if invoice.partner_id.vat_subjected:
-                    vat_status = 1
-                else:
-                    vat_status = 2
+                vat_status = invoice.fiscal_position and invoice.fiscal_position.proacc_code or "1"
                 representative = ""
                 payment_method = invoice.payment_term and invoice.payment_term.proacc_code or ""
                 due_date = invoice.date_due and time.strftime("%d/%m/%Y", time.strptime(invoice.date_due, "%Y-%m-%d"))
                 overall_discount = ""
                 fin_discount = ""
                 credit_limit = ""
-
                 first_line = True   
 
                 for line in invoice.invoice_line:
