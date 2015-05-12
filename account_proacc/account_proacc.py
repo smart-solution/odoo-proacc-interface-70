@@ -43,8 +43,7 @@ class account_proacc_api(osv.osv_memory):
             return False
 
         customers = obj.browse(cr, uid, customer_ids)
-        #filename = '/tmp/partners_' + time.strftime("%Y%m%d") + ".csv"
-        filename = '/tmp/partners_' + time.strftime("%Y%m%d") + ".csv"
+        filename = '/tmp/partners_' + time.strftime("%Y%m%d") + ".txt"
 
         with open(filename, 'wb') as proaccfile:
         
@@ -166,9 +165,7 @@ class account_proacc_api(osv.osv_memory):
         if not invoice_ids:
             return False
 
-        #filename = '/tmp/invoices_' + time.strftime("%Y%m%d") + ".csv"
         filename = '/tmp/invoices_' + time.strftime("%Y%m%d") + ".txt"
-        #filename = '/tmp/invoices_' + time.strftime("%Y%m%d")
         invoices = obj.browse(cr, uid, invoice_ids)
    
         with open(filename, 'wb') as csvfile:
@@ -405,6 +402,13 @@ class account_payment_term(osv.osv):
         "proacc_code": fields.char("ProAcc Code", size=3),
     }
 
+class account_fiscal_position(osv.osv):
+
+    _inherit = "account.fiscal.position"
+
+    _columns = {
+        "proacc_code": fields.char("ProAcc Code", size=3),
+    }
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -133,48 +133,16 @@
 
     <menuitem name="ProAcc import/Export" id="menu_proacc_axport" parent="account.menu_finance_periodical_processing" action="action_proacc_export" sequence="5"/>
 
-<!--
-    <record model="ir.ui.view" id="view_campaign_proposition_segment_segmentation_form_inherit">
-        <field name="name">view.campaign.proposition.segment.segmentation.form</field>
-        <field name="model">dm.campaign.proposition</field>
-        <field name="type">form</field>
-        <field name="inherit_id" ref="dm.view_campaign_proposition_form"/>        
-        <field name="arch" type="xml">
-            <xpath expr="/form/notebook/page/field[@name='segment_ids']/form/notebook" position="inside">
-                <page string="Extraction">
-                    <field name="segmentation_id" string="Segmentation"/>
-                    <field name="use_census"/>
-                </page>
-            </xpath>
-        </field>
-    </record>
-
-        <record id="view_product_search_nineit" model="ir.ui.view">
-            <field name="name">product.product.search.nineit</field>
-            <field name="model">product.product</field>
-            <field name="inherit_id" ref="product.product_search_form_view" />
-            <field name="type">search</field>
+        <record model="ir.ui.view" id="view_fiscal_position_proacc_form">
+            <field name="name">view.fiscal.position.proacc.form</field>
+            <field name="model">account.fiscal.position</field>
+            <field name="inherit_id" ref="account.view_account_position_form"/>
             <field name="arch" type="xml">
-                <xpath expr="/search/field[@name='categ_id']" position='after'>
-                        <field name="nineit_sku"/>
-                        <field name="nineit_barcode"/>
-                        <field name="nineit_import_file_id" string="Supplier"/>
-                </xpath>
+                <field name="name" position="after">
+                    <field name="proacc_code"/>
+                </field>
             </field>
         </record>
-
-    <act_window name="Ship Sale Orders"
-    res_model="sale.order"
-    src_model="res.partner"
-    view_type="form"
-    view_mode="tree,form"
-    id="act_tresco_ship_sale_orders"
-    context="{'ship_id':active_id}"
-    domain="[('ship_id','=',active_id)]"
-    />
-
-
--->
 
     </data>
 </openerp>
